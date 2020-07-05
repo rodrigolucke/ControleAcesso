@@ -1,0 +1,8 @@
+﻿1>------ Compilação iniciada: Projeto: ControleAcesso, Configuração: Release Any CPU ------
+1>  ControleAcesso -> C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\ControleAcesso.dll
+2>------ Publicação iniciada: Projeto: ControleAcesso, Configuração: Release Any CPU ------
+2>Conectando a ftp://ftp.site4now.net/https://luckerodrigo-001-site1.btempurl.com:8172/MsDeploy.axd?site=luckerodrigo-001-site1...
+2>Não é possível criar o site "ftp://ftp.site4now.net/https:/luckerodrigo-001-site1.btempurl.com:8172/MsDeploy.axd?site=luckerodrigo-001-site1".  Cannot create folder "https:/luckerodrigo-001-site1.btempurl.com:8172/MsDeploy.axd?site=luckerodrigo-001-site1".
+2>
+========== Compilar: 1 com êxito, 0 com falha, 0 atualizados, 0 ignorados ==========
+========== Publicação: 0 com êxito, 1 com falha, 0 ignorados ==========

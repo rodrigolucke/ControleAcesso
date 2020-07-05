@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="grupo">
+    <Key>
+      <PropertyRef Name="id_grupo" />
+    </Key>
+    <Property Name="id_grupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome_grupo" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="pessoa">
+    <Key>
+      <PropertyRef Name="id_pessoa" />
+    </Key>
+    <Property Name="id_pessoa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="sobrenome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="cpf" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="senha" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="pessoa_id_pessoa" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario_grupo">
+    <Key>
+      <PropertyRef Name="seq" />
+    </Key>
+    <Property Name="seq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+    <Property Name="id_grupo" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_grupo_usuario_grupo">
+    <End Role="grupo" Type="Self.grupo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario_grupo" Type="Self.usuario_grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grupo">
+        <PropertyRef Name="id_grupo" />
+      </Principal>
+      <Dependent Role="usuario_grupo">
+        <PropertyRef Name="id_grupo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_grupo_usuario_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario_grupo" Type="Self.usuario_grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="usuario_grupo">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PESSOA_ID_GRUPO">
+    <End Role="pessoa" Type="Self.pessoa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pessoa">
+        <PropertyRef Name="id_pessoa" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="pessoa_id_pessoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pessoa" EntityType="Self.pessoa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">
+      <End Role="grupo" EntitySet="grupo" />
+      <End Role="usuario_grupo" EntitySet="usuario_grupo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_grupo_usuario_usuario" Association="Self.FK_grupo_usuario_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="usuario_grupo" EntitySet="usuario_grupo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PESSOA_ID_GRUPO" Association="Self.FK_PESSOA_ID_GRUPO">
+      <End Role="pessoa" EntitySet="pessoa" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

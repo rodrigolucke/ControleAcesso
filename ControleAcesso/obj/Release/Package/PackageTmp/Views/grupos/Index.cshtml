@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ControleAcesso.Models.grupo>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nome_grupo)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome_grupo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id_grupo }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id_grupo }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id_grupo })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>
