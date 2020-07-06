@@ -9,6 +9,7 @@ namespace ControleAcesso.Models
 {
     public class Role : RoleProvider
     {
+        Database1Entities1 db = new Database1Entities1();
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -54,7 +55,7 @@ namespace ControleAcesso.Models
            
           
 
-            Database1Entities1 db = new Database1Entities1();
+           
 
             pessoa p1 = db.pessoa.Where(
                   p => p.email.Equals(username)).FirstOrDefault();
@@ -84,6 +85,13 @@ namespace ControleAcesso.Models
             return retorno;
             throw new Exception("Sem Acesso");
 
+        }
+
+        public int userId(string username)
+        {
+            pessoa p1 = db.pessoa.Where(
+                 p => p.email.Equals(username)).FirstOrDefault();
+            return p1.id_pessoa;
         }
         public override string[] GetUsersInRole(string roleName)
         {

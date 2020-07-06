@@ -10,18 +10,20 @@ using ControleAcesso.Models;
 
 namespace ControleAcesso.Controllers
 {
-    [Authorize(Roles = "administrador")]
+   
     public class gruposController : Controller
     {
         private Database1Entities1 db = new Database1Entities1();
 
         // GET: grupos
+        [Authorize(Roles = "administrador,usuarios")]
         public ActionResult Index()
         {
             return View(db.grupo.ToList());
         }
 
         // GET: grupos/Details/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: grupos/Create
+        [Authorize(Roles = "administrador")]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +50,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Create([Bind(Include = "id_grupo,nome_grupo")] grupo grupo)
         {
             if (ModelState.IsValid)
@@ -60,6 +64,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: grupos/Edit/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +84,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit([Bind(Include = "id_grupo,nome_grupo")] grupo grupo)
         {
             if (ModelState.IsValid)
@@ -91,6 +97,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: grupos/Delete/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -108,6 +115,7 @@ namespace ControleAcesso.Controllers
         // POST: grupos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult DeleteConfirmed(int id)
         {
             grupo grupo = db.grupo.Find(id);

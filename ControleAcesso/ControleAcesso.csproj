@@ -200,6 +200,7 @@
     <Content Include="Views\Account\Recupera.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\Account\RecuperaSenha.cshtml" />
+    <Content Include="Views\pessoas\Editar.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>
@@ -214,7 +215,6 @@
     <Compile Include="Controllers\gruposController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\pessoasController.cs" />
-    <Compile Include="Controllers\TesteController.cs" />
     <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Controllers\usuario_grupoController.cs" />
     <Compile Include="Global.asax.cs">

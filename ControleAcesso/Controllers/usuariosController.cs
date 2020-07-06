@@ -11,12 +11,12 @@ using ControleAcesso.Models;
 
 namespace ControleAcesso.Controllers
 {
-    [Authorize(Roles = "administrador")]
     public class usuariosController : Controller
     {
         private Database1Entities1 db = new Database1Entities1();
 
         // GET: usuarios
+        [Authorize(Roles = "administrador,usuarios")]
         public ActionResult Index()
         {
             var usuario = db.usuario.Include(u => u.pessoa);
@@ -39,6 +39,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuarios/Create
+        [Authorize(Roles = "administrador")]
         public ActionResult Create()
         {
             ViewBag.pessoa_id_pessoa = new SelectList(db.pessoa, "id_pessoa", "nome");
@@ -50,6 +51,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Create([Bind(Include = "id_usuario,login_usuario,senha,pessoa_id_pessoa")] usuario usuario)
         {
             if (ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuarios/Edit/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,6 +89,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit([Bind(Include = "id_usuario,login_usuario,senha,pessoa_id_pessoa")] usuario usuario)
         {
             if (ModelState.IsValid)
@@ -100,6 +104,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuarios/Delete/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,6 +122,7 @@ namespace ControleAcesso.Controllers
         // POST: usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult DeleteConfirmed(int id)
         {
             usuario usuario = db.usuario.Find(id);

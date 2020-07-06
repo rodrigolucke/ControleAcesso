@@ -8,27 +8,31 @@
     <title>Index</title>
 </head>
 <body>
+    @if (Roles.IsUserInRole("administrador"))
+    {
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.sobrenome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cpf)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
+    }
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sobrenome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cpf)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.nome)
@@ -43,13 +47,26 @@
                 @Html.DisplayFor(modelItem => item.cpf)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.id_pessoa }) |
-                @Html.ActionLink("Details", "Details", new { id=item.id_pessoa }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.id_pessoa })
+
+                @if (item.email == @HttpContext.Current.User.Identity.Name)
+                {
+                    @Html.ActionLink("Editar", "Editar", new { id = item.id_pessoa })
+                }
+
+                @if (Roles.IsUserInRole("administrador"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id_pessoa })
+                }
+                @if (Roles.IsUserInRole("administrador"))
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.id_pessoa })} |
+                @if (Roles.IsUserInRole("administrador"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id_pessoa })}
             </td>
         </tr>
     }
     
-    </table>
-</body>
+</table>
+                            </body>
 </html>

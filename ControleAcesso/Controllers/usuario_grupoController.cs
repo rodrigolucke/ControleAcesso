@@ -10,14 +10,14 @@ using ControleAcesso.Models;
 
 namespace ControleAcesso.Controllers
 {
-    [Authorize(Roles = "administrador")]
+    
     public class usuario_grupoController : Controller
     {
 
         private Database1Entities1 db = new Database1Entities1();
 
         // GET: usuario_grupo
-
+        [Authorize(Roles = "administrador,usuarios")]
         public ActionResult Index()
         {
             var usuario_grupo = db.usuario_grupo.Include(u => u.grupo).Include(u => u.usuario);
@@ -25,6 +25,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuario_grupo/Details/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,6 +41,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuario_grupo/Create
+        [Authorize(Roles = "administrador")]
         public ActionResult Create()
         {
             ViewBag.id_grupo = new SelectList(db.grupo, "id_grupo", "nome_grupo");
@@ -52,6 +54,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Create([Bind(Include = "seq,id_usuario,id_grupo")] usuario_grupo usuario_grupo)
         {
             if (ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuario_grupo/Edit/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,6 +92,7 @@ namespace ControleAcesso.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult Edit([Bind(Include = "seq,id_usuario,id_grupo")] usuario_grupo usuario_grupo)
         {
             if (ModelState.IsValid)
@@ -102,6 +107,7 @@ namespace ControleAcesso.Controllers
         }
 
         // GET: usuario_grupo/Delete/5
+        [Authorize(Roles = "administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,6 +125,7 @@ namespace ControleAcesso.Controllers
         // POST: usuario_grupo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public ActionResult DeleteConfirmed(int id)
         {
             usuario_grupo usuario_grupo = db.usuario_grupo.Find(id);

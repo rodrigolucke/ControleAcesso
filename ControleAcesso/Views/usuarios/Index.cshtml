@@ -8,42 +8,55 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @if (Roles.IsUserInRole("administrador"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.login_usuario)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.senha)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.pessoa.nome)
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.login_usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.senha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pessoa.nome)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.id_usuario }) |
-                @Html.ActionLink("Details", "Details", new { id=item.id_usuario }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.id_usuario })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.login_usuario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.pessoa.nome)
+    </td>
+    <td>
+        @if (Roles.IsUserInRole("administrador"))
+        {
+         @Html.ActionLink("Edit", "Edit", new { id = item.id_usuario })
+        }
+        |
+        @if (Roles.IsUserInRole("administrador"))
+        {
+         @Html.ActionLink("Delete", "Delete", new { id = item.id_usuario })
+        }
+        |
+        @if (Roles.IsUserInRole("administrador")) 
+        {            
+            @Html.ActionLink("Details", "Details", new { id = item.id_usuario }) 
+        }
+        |
+
+
+
+    </td>
+</tr>}
+
     </table>
 </body>
 </html>

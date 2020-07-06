@@ -58,6 +58,8 @@ namespace ControleAcesso.Controllers
                         /*código abaixo cria uma session para armazenar o nome do usuário*/
                         Session["Nome"] = vUser.pessoa.nome;
                         Session["userid"] = vUser.id_usuario;
+                        Session["idpessoa"] = vUser.pessoa_id_pessoa;
+
                     /*retorna para a tela inicial do Home*/
                     return RedirectToAction("Index", "Home");
                 }

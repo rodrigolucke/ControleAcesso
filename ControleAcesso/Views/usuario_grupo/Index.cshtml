@@ -8,36 +8,46 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.grupo.nome_grupo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.usuario.login_usuario)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.grupo.nome_grupo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.usuario.login_usuario)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.seq }) |
-                @Html.ActionLink("Details", "Details", new { id=item.seq }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.seq })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
+    @if (Roles.IsUserInRole("administrador"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+     }
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.grupo.nome_grupo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.usuario.login_usuario)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.grupo.nome_grupo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.login_usuario)
+        </td>
+        <td>
+            @if (Roles.IsUserInRole("administrador"))
+            {
+        @Html.ActionLink("Edit", "Edit", new { id = item.seq })}|
+
+            @if (Roles.IsUserInRole("administrador"))
+            {
+        @Html.ActionLink("Details", "Details", new { id = item.seq })}|
+            @if (Roles.IsUserInRole("administrador"))
+            {
+        @Html.ActionLink("Delete", "Delete", new { id = item.seq })}
+                        </td>
+    </tr>}
+
+                </table>
+                            </body>
 </html>
