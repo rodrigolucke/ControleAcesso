@@ -80,7 +80,6 @@ C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAces
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAcesso.csproj.CopyComplete
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAcesso.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAcesso.pdb
-C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAcesso.csprojAssemblyReference.cache
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\BouncyCastle.Crypto.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MailKit.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MimeKit.dll
@@ -89,3 +88,4 @@ C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MailKit.pdb
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MailKit.xml
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MimeKit.pdb
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\MimeKit.xml
+C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Debug\ControleAcesso.csprojAssemblyReference.cache

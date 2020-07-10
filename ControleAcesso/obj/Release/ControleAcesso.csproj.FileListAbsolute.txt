@@ -84,8 +84,8 @@ C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\pt-br\System.Web.W
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\pt-br\System.Web.Webpages.Razor.resources.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\pt-br\System.Web.Helpers.resources.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\bin\pt-br\System.Web.Mvc.resources.dll
-C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.csprojAssemblyReference.cache
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.csproj.CoreCompileInputs.cache
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.csproj.CopyComplete
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.dll
 C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.pdb
+C:\Users\rodri\source\repos\ControleAcesso\ControleAcesso\obj\Release\ControleAcesso.csprojAssemblyReference.cache

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="grupo">
     <Key>
       <PropertyRef Name="id_grupo" />
@@ -18,6 +18,14 @@
     <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="cpf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="usuario" Relationship="Self.FK_PESSOA_ID_GRUPO" FromRole="pessoa" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="rec">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_suario" Type="Int32" Nullable="false" />
+    <Property Name="str" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
   </EntityType>
   <EntityType Name="usuario">
     <Key>
@@ -85,6 +93,7 @@
   <EntityContainer Name="Database1Entities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="grupo" EntityType="Self.grupo" />
     <EntitySet Name="pessoa" EntityType="Self.pessoa" />
+    <EntitySet Name="rec" EntityType="Self.rec" />
     <EntitySet Name="usuario" EntityType="Self.usuario" />
     <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" />
     <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">

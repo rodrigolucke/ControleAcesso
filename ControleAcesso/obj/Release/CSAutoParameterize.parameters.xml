@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="Database1Entities1-Web.config Connection String" description="Database1Entities1 A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;&#xD;&#xA;     provider=System.Data.SqlClient;provider connection string=&quot;&#xD;&#xA;     data source=sql5045.site4now.net;&#xD;&#xA;     initial catalog=DB_A64246_Database1;&#xD;&#xA;     persist security info=True;&#xD;&#xA;     user id=DB_A64246_Database1_admin;&#xD;&#xA;     password=database123;&#xD;&#xA;     MultipleActiveResultSets=True;&#xD;&#xA;     App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\rodri\\source\\repos\\ControleAcesso\\ControleAcesso\\obj\\Release\\Package\\PackageTmp\\Web\.Config$" match="/configuration/connectionStrings/add[@name='Database1Entities1']/@connectionString" />
+  </parameter>
+</parameters>

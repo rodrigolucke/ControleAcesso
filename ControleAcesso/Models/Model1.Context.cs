@@ -27,6 +27,7 @@ namespace ControleAcesso.Models
     
         public virtual DbSet<grupo> grupo { get; set; }
         public virtual DbSet<pessoa> pessoa { get; set; }
+        public virtual DbSet<rec> rec { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
         public virtual DbSet<usuario_grupo> usuario_grupo { get; set; }
     }

@@ -11,7 +11,7 @@ namespace ControleAcesso.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class usuario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,8 +28,5 @@ namespace ControleAcesso.Models
         public virtual pessoa pessoa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuario_grupo> usuario_grupo { get; set; }
-
-       
     }
 }
-

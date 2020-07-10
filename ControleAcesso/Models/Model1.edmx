@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="grupo">
           <Key>
             <PropertyRef Name="id_grupo" />
@@ -21,6 +21,14 @@
           <Property Name="sobrenome" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cpf" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rec">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_suario" Type="int" Nullable="false" />
+          <Property Name="str" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -81,9 +89,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Database1ModelStoreContainer">
+        <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pessoa" EntityType="Self.pessoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rec" EntityType="Self.rec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">
@@ -103,7 +112,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="grupo">
           <Key>
             <PropertyRef Name="id_grupo" />
@@ -122,6 +131,14 @@
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cpf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="usuario" Relationship="Self.FK_PESSOA_ID_GRUPO" FromRole="pessoa" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="rec">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_suario" Type="Int32" Nullable="false" />
+          <Property Name="str" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -189,6 +206,7 @@
         <EntityContainer Name="Database1Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="grupo" EntityType="Self.grupo" />
           <EntitySet Name="pessoa" EntityType="Self.pessoa" />
+          <EntitySet Name="rec" EntityType="Self.rec" />
           <EntitySet Name="usuario" EntityType="Self.usuario" />
           <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" />
           <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">
@@ -209,9 +227,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities1">
+        <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Database1Entities1">
           <EntitySetMapping Name="grupo">
-            <EntityTypeMapping TypeName="Database1Model.grupo">
+            <EntityTypeMapping TypeName="Model1.grupo">
               <MappingFragment StoreEntitySet="grupo">
                 <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
                 <ScalarProperty Name="nome_grupo" ColumnName="nome_grupo" />
@@ -219,7 +237,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="pessoa">
-            <EntityTypeMapping TypeName="Database1Model.pessoa">
+            <EntityTypeMapping TypeName="Model1.pessoa">
               <MappingFragment StoreEntitySet="pessoa">
                 <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
@@ -229,8 +247,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="rec">
+            <EntityTypeMapping TypeName="Model1.rec">
+              <MappingFragment StoreEntitySet="rec">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="id_suario" ColumnName="id_suario" />
+                <ScalarProperty Name="str" ColumnName="str" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="usuario">
-            <EntityTypeMapping TypeName="Database1Model.usuario">
+            <EntityTypeMapping TypeName="Model1.usuario">
               <MappingFragment StoreEntitySet="usuario">
                 <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
                 <ScalarProperty Name="login_usuario" ColumnName="login_usuario" />
@@ -240,7 +267,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usuario_grupo">
-            <EntityTypeMapping TypeName="Database1Model.usuario_grupo">
+            <EntityTypeMapping TypeName="Model1.usuario_grupo">
               <MappingFragment StoreEntitySet="usuario_grupo">
                 <ScalarProperty Name="seq" ColumnName="seq" />
                 <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />

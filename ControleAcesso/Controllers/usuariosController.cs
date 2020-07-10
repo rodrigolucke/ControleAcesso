@@ -42,7 +42,12 @@ namespace ControleAcesso.Controllers
         [Authorize(Roles = "administrador")]
         public ActionResult Create()
         {
-            ViewBag.pessoa_id_pessoa = new SelectList(db.pessoa, "id_pessoa", "nome");
+
+            var itemIds = db.usuario.Select(x => x.pessoa_id_pessoa).ToArray();
+            var listaPessoasDisponiveis = db.pessoa.Where(x => !itemIds.Contains(x.id_pessoa));
+
+
+            ViewBag.pessoa_id_pessoa = new SelectList(listaPessoasDisponiveis, "id_pessoa", "nome");
             return View();
         }
 

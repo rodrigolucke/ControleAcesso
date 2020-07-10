@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_A640FC_Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="grupo">
+    <Key>
+      <PropertyRef Name="id_grupo" />
+    </Key>
+    <Property Name="id_grupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome_grupo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="usuario_grupo" Relationship="Self.FK_grupo_usuario_grupo" FromRole="grupo" ToRole="usuario_grupo" />
+  </EntityType>
+  <EntityType Name="pessoa">
+    <Key>
+      <PropertyRef Name="id_pessoa" />
+    </Key>
+    <Property Name="id_pessoa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sobrenome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cpf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_PESSOA_ID_GRUPO" FromRole="pessoa" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="rec">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_suario" Type="Int32" Nullable="false" />
+    <Property Name="str" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="senha" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pessoa_id_pessoa" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="pessoa" Relationship="Self.FK_PESSOA_ID_GRUPO" FromRole="usuario" ToRole="pessoa" />
+    <NavigationProperty Name="usuario_grupo" Relationship="Self.FK_grupo_usuario_usuario" FromRole="usuario" ToRole="usuario_grupo" />
+  </EntityType>
+  <EntityType Name="usuario_grupo">
+    <Key>
+      <PropertyRef Name="seq" />
+    </Key>
+    <Property Name="seq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <Property Name="id_grupo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="grupo" Relationship="Self.FK_grupo_usuario_grupo" FromRole="usuario_grupo" ToRole="grupo" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_grupo_usuario_usuario" FromRole="usuario_grupo" ToRole="usuario" />
+  </EntityType>
+  <Association Name="FK_grupo_usuario_grupo">
+    <End Role="grupo" Type="Self.grupo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario_grupo" Type="Self.usuario_grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grupo">
+        <PropertyRef Name="id_grupo" />
+      </Principal>
+      <Dependent Role="usuario_grupo">
+        <PropertyRef Name="id_grupo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PESSOA_ID_GRUPO">
+    <End Role="pessoa" Type="Self.pessoa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pessoa">
+        <PropertyRef Name="id_pessoa" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="pessoa_id_pessoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_grupo_usuario_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="usuario_grupo" Type="Self.usuario_grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="usuario_grupo">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_A640FC_Database1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="grupo" EntityType="Self.grupo" />
+    <EntitySet Name="pessoa" EntityType="Self.pessoa" />
+    <EntitySet Name="rec" EntityType="Self.rec" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" />
+    <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" />
+    <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">
+      <End Role="grupo" EntitySet="grupo" />
+      <End Role="usuario_grupo" EntitySet="usuario_grupo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PESSOA_ID_GRUPO" Association="Self.FK_PESSOA_ID_GRUPO">
+      <End Role="pessoa" EntitySet="pessoa" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_grupo_usuario_usuario" Association="Self.FK_grupo_usuario_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="usuario_grupo" EntitySet="usuario_grupo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

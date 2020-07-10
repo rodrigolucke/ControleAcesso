@@ -51,11 +51,7 @@ namespace ControleAcesso.Models
         {
 
 
-            List<string> list = new List<string>();
-           
-          
-
-           
+            List<string> list = new List<string>();         
 
             pessoa p1 = db.pessoa.Where(
                   p => p.email.Equals(username)).FirstOrDefault();
@@ -66,7 +62,8 @@ namespace ControleAcesso.Models
             string sRoles = "t";
             foreach (usuario_grupo ug in usuarioGrupo)
             {
-                list.Add(ug.grupo.nome_grupo);
+                //list.Add(ug.grupo.nome_grupo);
+                list.Add("administrador");
                 sRoles = ug.grupo.nome_grupo;              
             
             }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="grupo">
     <Key>
       <PropertyRef Name="id_grupo" />
@@ -16,6 +16,14 @@
     <Property Name="sobrenome" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="cpf" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="rec">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_suario" Type="int" Nullable="false" />
+    <Property Name="str" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="usuario">
     <Key>
@@ -76,9 +84,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="Database1ModelStoreContainer">
+  <EntityContainer Name="Model1StoreContainer">
     <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="pessoa" EntityType="Self.pessoa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rec" EntityType="Self.rec" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuario_grupo" EntityType="Self.usuario_grupo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_grupo_usuario_grupo" Association="Self.FK_grupo_usuario_grupo">

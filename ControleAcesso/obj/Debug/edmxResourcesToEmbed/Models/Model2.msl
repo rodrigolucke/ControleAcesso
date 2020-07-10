@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_A640FC_Database1ModelStoreContainer" CdmEntityContainer="DB_A640FC_Database1Entities">
+    <EntitySetMapping Name="grupo">
+      <EntityTypeMapping TypeName="DB_A640FC_Database1Model.grupo">
+        <MappingFragment StoreEntitySet="grupo">
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+          <ScalarProperty Name="nome_grupo" ColumnName="nome_grupo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pessoa">
+      <EntityTypeMapping TypeName="DB_A640FC_Database1Model.pessoa">
+        <MappingFragment StoreEntitySet="pessoa">
+          <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="sobrenome" ColumnName="sobrenome" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rec">
+      <EntityTypeMapping TypeName="DB_A640FC_Database1Model.rec">
+        <MappingFragment StoreEntitySet="rec">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="id_suario" ColumnName="id_suario" />
+          <ScalarProperty Name="str" ColumnName="str" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="DB_A640FC_Database1Model.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="login_usuario" ColumnName="login_usuario" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="pessoa_id_pessoa" ColumnName="pessoa_id_pessoa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario_grupo">
+      <EntityTypeMapping TypeName="DB_A640FC_Database1Model.usuario_grupo">
+        <MappingFragment StoreEntitySet="usuario_grupo">
+          <ScalarProperty Name="seq" ColumnName="seq" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

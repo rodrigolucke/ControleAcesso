@@ -27,7 +27,14 @@ namespace ControleAcesso.Controllers
         public ActionResult Login(usuario user, string returnUrl)
         {
             var sessao = Session;
-            
+
+
+            if (TempData.ContainsKey("Error") && TempData["Error"].ToString() != null)
+            {
+                ModelState.AddModelError("Error", TempData.Peek("Error").ToString());
+               
+            }
+       
             if (!ModelState.IsValid)
             {
                 return View(user);
@@ -35,6 +42,7 @@ namespace ControleAcesso.Controllers
             else
             {
 
+              
 
                 if (user.login_usuario == null && user.senha == null)
                 {
@@ -43,8 +51,7 @@ namespace ControleAcesso.Controllers
                 var vUser = db.usuario.Where(
                     p => p.login_usuario.Equals(user.login_usuario)).FirstOrDefault();
 
-                string i = Criptografia.Codifica(user.senha);
-
+               // string i = Criptografia.Codifica(user.senha);
                 if (vUser != null && vUser.login_usuario == user.login_usuario && Criptografia.Compara(user.senha,vUser.senha))
                 {
                     
@@ -88,17 +95,42 @@ namespace ControleAcesso.Controllers
 
         // <param name = "idususario" ></ param >
         // <returns></returns>
-        [Authorize(Roles = "recuperacao")]
-        public ActionResult RecuperaSenha(int idususario)
+      
+        public ActionResult RecuperaSenha(int idususario, string code)
         {
 
-            usuario usuario = db.usuario.Find(idususario);
-            if (usuario == null)
+            usuario usr = db.usuario.Find(idususario);
+
+            if (usr == null)
             {
                 return HttpNotFound();
             }
 
-            return View(usuario);
+            usuario_grupo ug = db.usuario_grupo.Where(
+                    p => p.id_grupo.Equals(3)
+                    ).Where(x => x.id_usuario.Equals(usr.id_usuario)).FirstOrDefault();
+
+            if (ug == null)
+            {
+                TempData["Error"] = "Usuário sem solicitacao de troca de senha!";
+
+                return RedirectToAction("Login", "Account");
+            }
+
+            rec r = db.rec.Where(
+                    p => p.id_suario.Equals(usr.id_usuario)
+                    ).Where(x => x.str.Equals(code)).FirstOrDefault();
+
+            if (r == null)
+            {
+                TempData["Error"] = "Código de verificação inválido!";
+
+                return RedirectToAction("Login", "Account");
+            }
+
+
+            usr.senha = null;
+            return View(usr);
         }
 
      
@@ -117,53 +149,127 @@ namespace ControleAcesso.Controllers
             }
             usuario vUser = db.usuario.Where(
                     p => p.pessoa_id_pessoa.Equals(p1.id_pessoa)).FirstOrDefault();
-            SmtpClient mailClient = new SmtpClient();
-            //This object stores the authentication values      
-            System.Net.NetworkCredential basicCredential =
-                new System.Net.NetworkCredential("digolucke@gmail.com", "04171824");
-            mailClient.Host = "smtp.gmail.com";
-            mailClient.Port = 587;
-            mailClient.EnableSsl = true;
-            mailClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            mailClient.UseDefaultCredentials = false;
-            mailClient.Credentials = basicCredential;            
+
+            
+            rec r2 = db.rec.Where(
+                  p => p.id_suario.Equals(vUser.id_usuario)
+                  ).FirstOrDefault();
+            while (r2 != null)
+            {
+                 
+                db.rec.Remove(r2);
+                db.SaveChanges();
+                r2 = db.rec.Where(
+                  p => p.id_suario.Equals(vUser.id_usuario)
+                  ).FirstOrDefault();
+               
+            }
+
+            rec r = new rec();
+            r.id_suario = vUser.id_usuario;
+            Random rnd = new Random();
+            rnd.Next(100, 1000000);
+            r.str = rnd.Next(100, 1000000).ToString();
+            db.rec.Add(r);
+            db.SaveChanges();
+           // SmtpClient mailClient = new SmtpClient();
+           // System.Net.NetworkCredential basicCredential =
+            //  new System.Net.NetworkCredential("pi3unisc@gmail.com", "pi3unisc123");
+           //      new System.Net.NetworkCredential("digolucke@gmail.com", "04171824Thor#");
+            //new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
+           
+           /* SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            var mail = new MailMessage();
+            mail.From = new MailAddress("noreply@hotmail.com");
+            mail.To.Add(p1.email);
+            mail.Subject = "Recovery";
+            string htmlBody;
+            htmlBody = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
+            mail.Body = htmlBody;
+            SmtpServer.Port = 587;
+            SmtpServer.UseDefaultCredentials = false;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
+
+            SmtpServer.EnableSsl = false;
+            SmtpServer.Send(mail);*/
 
 
+            MailMessage mail = new MailMessage();
+            mail.To.Add(p1.email);
+            mail.From = new MailAddress("noreply@gmail.com");
+            mail.Subject = "Passwor Recovery";
+            string Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
+            mail.Body = Body;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25);
+            // smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+            smtp.UseDefaultCredentials = false;
+            smtp.EnableSsl = true;
+            smtp.Credentials = new System.Net.NetworkCredential("informaticacolegio01@gmail.com", "colegio.01");
+            //smtp.Credentials = new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
+            // smtp.Port = 587;
+            //Or your Smtp Email ID and Password
+            smtp.Send(mail);
+            /*    MailMessage message = new MailMessage();
 
-            MailMessage message = new MailMessage();
+                MailAddress fromAddress = new MailAddress("info@mydomain.com");
+                message.Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
+                message.From = fromAddress;
+                //here you can set address    
+                message.To.Add(p1.email);
+                message.Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario+"&code=" + r.str;
+                message.From = fromAddress;
+                //here you can set address    
+                message.To.Add(p1.email);
+                //here you can put your message details 
 
-            MailAddress fromAddress = new MailAddress("info@mydomain.com");
-            message.Body = "https://localhost:44344/Account/RecuperaSenha?idususario=" + vUser.id_usuario;
-            message.From = fromAddress;
-            //here you can set address    
-            message.To.Add(p1.email);
-            //here you can put your message details 
-
-            mailClient.Send(message);
+                mailClient.Send(message);*/
             usuario_grupo ug = new usuario_grupo();
             ug.id_usuario = vUser.id_usuario;
             ug.id_grupo = 3;
             db.usuario_grupo.Add(ug);
+            
+
+            //Números de 10 até 999999
+           
 
             db.SaveChanges();
 
             return RedirectToAction("Login", "Account");
         }
 
-        [Authorize(Roles = "recuperacao")]
+      
         public ActionResult EditarSenha()
         {
             int id = Int32.Parse(Request.Form["id_usuario"]);
+            usuario_grupo ug = db.usuario_grupo.Where(
+                   p => p.id_grupo.Equals(3)
+                   ).Where(x => x.id_usuario.Equals(id)).FirstOrDefault();
+
+
+
+            if (ug == null)
+            {
+                return HttpNotFound();
+            }
             usuario u = db.usuario.Find(id);
             u.senha = Criptografia.Codifica(Request.Form["senha"]);
             db.SaveChanges();
-
-            usuario_grupo ug = db.usuario_grupo.Where(
-                    p => p.id_grupo.Equals(3)
-                    ).Where(x=> x.id_usuario.Equals(id)).FirstOrDefault();
-
+            
+            rec r = db.rec.Where(
+                   p => p.id_suario.Equals(u.id_usuario)
+                   ).FirstOrDefault();
+            while (r != null)
+            {
+                 
+                db.rec.Remove(r);
+                db.SaveChanges();
+                r = db.rec.Where(
+                  p => p.id_suario.Equals(u.id_usuario)
+                  ).FirstOrDefault();
+               
+            }
             db.usuario_grupo.Remove(ug);
-            db.SaveChanges();
+            
 
             return RedirectToAction("Login", "Account");
         }
