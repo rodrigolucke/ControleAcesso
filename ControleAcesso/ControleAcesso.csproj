@@ -199,6 +199,7 @@
     <Content Include="Views\Account\RecuperaSenha.cshtml" />
     <Content Include="Views\pessoas\Editar.cshtml" />
     <Content Include="Web.Config" />
+    <Content Include="Views\usuarios\Editar.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

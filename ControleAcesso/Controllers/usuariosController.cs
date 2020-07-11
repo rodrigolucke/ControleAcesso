@@ -85,7 +85,8 @@ namespace ControleAcesso.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.pessoa_id_pessoa = new SelectList(db.pessoa, "id_pessoa", "nome", usuario.pessoa_id_pessoa);
+            var listaPessoasDisponiveis = db.pessoa.Where(x => x.id_pessoa.Equals(usuario.pessoa_id_pessoa));
+            ViewBag.pessoa_id_pessoa = new SelectList(listaPessoasDisponiveis, "id_pessoa", "nome");
             return View(usuario);
         }
 
@@ -100,7 +101,76 @@ namespace ControleAcesso.Controllers
             if (ModelState.IsValid)
             {   
                 db.Entry(usuario).State = EntityState.Modified;
+
+                usuario us = db.usuario.Find(usuario.id_usuario);
+
+                if (!us.senha.Equals(usuario.senha))
+                {
+                    usuario.senha = Criptografia.Codifica(usuario.senha);
+                }
+                else
+                {
+                    usuario.senha = us.senha;
+                }
                 usuario.senha = Criptografia.Codifica(usuario.senha);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            var listaPessoasDisponiveis = db.pessoa.Where(x => x.id_pessoa.Equals(usuario.pessoa_id_pessoa));
+            ViewBag.pessoa_id_pessoa = new SelectList(listaPessoasDisponiveis, "id_pessoa", "nome");
+            return View(usuario);
+        }
+
+        [Authorize(Roles = "administrador,usuarios")]
+        public ActionResult Editar(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            usuario us = db.usuario.Find(id);
+            if (us == null)
+            {
+                return HttpNotFound();
+            }
+            if (us.pessoa.email != HttpContext.User.Identity.Name)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           // var itemIds = db.usuario.Select(x => x.pessoa_id_pessoa).ToArray();
+            var listaPessoasDisponiveis = db.pessoa.Where(x => x.id_pessoa.Equals(us.pessoa_id_pessoa));
+
+
+            ViewBag.pessoa_id_pessoa = new SelectList(listaPessoasDisponiveis, "id_pessoa", "nome");
+            return View(us);
+        }
+
+
+        // POST: pessoas/Edit/5
+        // Para se proteger de mais ataques, habilite as propriedades específicas às quais você quer se associar. Para 
+        // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador,usuarios")]
+        public ActionResult Editar([Bind(Include = "id_usuario,login_usuario,senha,pessoa_id_pessoa")] usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(usuario).State = EntityState.Modified;
+                usuario us =  db.usuario.Find(usuario.id_usuario);
+
+
+                if (!us.senha.Equals(usuario.senha))
+                {
+                    usuario.senha = Criptografia.Codifica(usuario.senha);
+                }
+                else
+                {
+                    usuario.senha = us.senha;
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

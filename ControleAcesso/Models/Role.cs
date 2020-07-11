@@ -62,8 +62,8 @@ namespace ControleAcesso.Models
             string sRoles = "t";
             foreach (usuario_grupo ug in usuarioGrupo)
             {
-                //list.Add(ug.grupo.nome_grupo);
-                list.Add("administrador");
+                list.Add(ug.grupo.nome_grupo);
+                //list.Add("administrador");
                 sRoles = ug.grupo.nome_grupo;              
             
             }

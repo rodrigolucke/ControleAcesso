@@ -107,7 +107,7 @@ namespace ControleAcesso.Controllers
             }
 
             usuario_grupo ug = db.usuario_grupo.Where(
-                    p => p.id_grupo.Equals(3)
+                    p => p.id_grupo.Equals(4)
                     ).Where(x => x.id_usuario.Equals(usr.id_usuario)).FirstOrDefault();
 
             if (ug == null)
@@ -144,7 +144,7 @@ namespace ControleAcesso.Controllers
 
             if (p1 == null)
             {
-                ModelState.AddModelError("Error", "Email não enconttrado");
+                ModelState.AddModelError("Error", "Email não encontrado");
                 return RedirectToAction("Login", "Account");
             }
             usuario vUser = db.usuario.Where(
@@ -154,6 +154,7 @@ namespace ControleAcesso.Controllers
             rec r2 = db.rec.Where(
                   p => p.id_suario.Equals(vUser.id_usuario)
                   ).FirstOrDefault();
+
             while (r2 != null)
             {
                  
@@ -171,66 +172,43 @@ namespace ControleAcesso.Controllers
             rnd.Next(100, 1000000);
             r.str = rnd.Next(100, 1000000).ToString();
             db.rec.Add(r);
-            db.SaveChanges();
-           // SmtpClient mailClient = new SmtpClient();
-           // System.Net.NetworkCredential basicCredential =
-            //  new System.Net.NetworkCredential("pi3unisc@gmail.com", "pi3unisc123");
-           //      new System.Net.NetworkCredential("digolucke@gmail.com", "04171824Thor#");
-            //new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
-           
-           /* SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            var mail = new MailMessage();
-            mail.From = new MailAddress("noreply@hotmail.com");
-            mail.To.Add(p1.email);
-            mail.Subject = "Recovery";
-            string htmlBody;
-            htmlBody = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
-            mail.Body = htmlBody;
-            SmtpServer.Port = 587;
-            SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
-
-            SmtpServer.EnableSsl = false;
-            SmtpServer.Send(mail);*/
+            db.SaveChanges();         
 
 
             MailMessage mail = new MailMessage();
             mail.To.Add(p1.email);
             mail.From = new MailAddress("noreply@gmail.com");
             mail.Subject = "Passwor Recovery";
-            string Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
+            string Body = "http://rodrigolucke-001-site1.itempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
             mail.Body = Body;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25);
-            // smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
             smtp.Credentials = new System.Net.NetworkCredential("informaticacolegio01@gmail.com", "colegio.01");
-            //smtp.Credentials = new System.Net.NetworkCredential("projetouniscpi@gmail.com", "projetouniscpi123");
-            // smtp.Port = 587;
-            //Or your Smtp Email ID and Password
+        
+       
             smtp.Send(mail);
-            /*    MailMessage message = new MailMessage();
+          
+            usuario_grupo ug2 = new usuario_grupo();
 
-                MailAddress fromAddress = new MailAddress("info@mydomain.com");
-                message.Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario + "&code=" + r.str;
-                message.From = fromAddress;
-                //here you can set address    
-                message.To.Add(p1.email);
-                message.Body = "http://luckerodrigo-001-site1.btempurl.com//Account/RecuperaSenha?idususario=" + vUser.id_usuario+"&code=" + r.str;
-                message.From = fromAddress;
-                //here you can set address    
-                message.To.Add(p1.email);
-                //here you can put your message details 
+            ug2 = db.usuario_grupo.Where(
+                 p => p.id_usuario.Equals(vUser.id_usuario)
+                 ).Where(x => x.id_grupo.Equals(4)).FirstOrDefault();
 
-                mailClient.Send(message);*/
+            while (ug2 != null)
+            {
+
+                db.usuario_grupo.Remove(ug2);
+                db.SaveChanges();
+                ug2 = db.usuario_grupo.Where(
+                 p => p.id_usuario.Equals(vUser.id_usuario))
+                    .Where(x => x.id_grupo.Equals(4)).FirstOrDefault();
+
+            }
             usuario_grupo ug = new usuario_grupo();
             ug.id_usuario = vUser.id_usuario;
-            ug.id_grupo = 3;
-            db.usuario_grupo.Add(ug);
-            
-
-            //Números de 10 até 999999
-           
+            ug.id_grupo = 4;
+            db.usuario_grupo.Add(ug);         
 
             db.SaveChanges();
 
@@ -242,7 +220,7 @@ namespace ControleAcesso.Controllers
         {
             int id = Int32.Parse(Request.Form["id_usuario"]);
             usuario_grupo ug = db.usuario_grupo.Where(
-                   p => p.id_grupo.Equals(3)
+                   p => p.id_grupo.Equals(4)
                    ).Where(x => x.id_usuario.Equals(id)).FirstOrDefault();
 
 

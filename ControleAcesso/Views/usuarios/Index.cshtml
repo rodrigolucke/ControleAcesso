@@ -36,19 +36,25 @@
         @Html.DisplayFor(modelItem => item.pessoa.nome)
     </td>
     <td>
+
+        @if (item.pessoa.email == @HttpContext.Current.User.Identity.Name)
+        {
+            @Html.ActionLink("Editar", "Editar", new { id = item.id_usuario })
+        }
+
         @if (Roles.IsUserInRole("administrador"))
         {
-         @Html.ActionLink("Edit", "Edit", new { id = item.id_usuario })
+            @Html.ActionLink("Edit", "Edit", new { id = item.id_usuario })
         }
         |
         @if (Roles.IsUserInRole("administrador"))
         {
-         @Html.ActionLink("Delete", "Delete", new { id = item.id_usuario })
+            @Html.ActionLink("Delete", "Delete", new { id = item.id_usuario })
         }
         |
-        @if (Roles.IsUserInRole("administrador")) 
-        {            
-            @Html.ActionLink("Details", "Details", new { id = item.id_usuario }) 
+        @if (Roles.IsUserInRole("administrador"))
+        {
+            @Html.ActionLink("Details", "Details", new { id = item.id_usuario })
         }
         |
 
